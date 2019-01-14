@@ -73,18 +73,52 @@ while(1):
 		for link in list_of_links:
 
 			try:
-				unsub_link = driver.find_element_by_partial_link_text(str(link))
-				unsub_link.click()
+				unsub_button = driver.find_element_by_partial_link_text(str(link))
+				unsub_link = unsub_button.get_attribute('href')
+				print(unsub_link)
+				conductor = webdriver.Firefox()
+				conductor.get(str(unsub_link))
+
+				conductor.implicitly_wait(5)
+
+				'''actions = ActionChains(conductor) 
+				actions.send_keys(Keys.TAB)
+				actions.perform()
+				actions.send_keys(Keys.TAB)
+				actions.perform()
+				actions.send_keys(Keys.SPACE)
+				actions.perform()
+
+				try:
+					email_unsub = conductor.find_element_by_id('EMAIL')
+					email_unsub = send_keys(str(email))
+				except:
+					pass'''
+
+				time.sleep(2)
+
+				list = ['.btn','#button1']
+
+				for j in list:
+					point = 0
+					print(j)
+					try:
+						final_button = conductor.find_element_by_css_selector(str(j))
+						final_button.click()
+						print('Done')
+						point = 1 
+					except:
+						pass
+					if(point == 1):
+						break
+
+				conductor.implicitly_wait(5)
+				time.sleep(2)
+				conductor.close()
+
 				count += 1
 
-				for links in list_of_links:
 
-					try:
-						unsub_link_1 = driver.find_element_by_partial_link_text(str(links))
-
-						driver.close()
-					except:
-						pass					
 
 			except:
 				pass
